@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hape 拼图华容道</title>
+    <title>Jigsaw</title>
     <style>
 
 body {
@@ -12,12 +12,22 @@ body {
   background-size: 100%;
 }
 
+   h2 {
+         text-align: center;
+         font-size: 44px;
+         font-family: "黑体", sans-serif;
+         padding: 10%;
+         margin: -5%;
+         background-color: rgba(255, 255, 255, 0.45);
+      }
+
 
    h1 {
          text-align: center;
          font-size: 66px;
          font-family: "黑体", sans-serif;
          text-shadow: 2px 2px 4px #000;
+         padding: 5%;
       }
 
         .list_item {
@@ -114,6 +124,7 @@ body {
             #item_content{
                 border:orange 5px solid;
                 background-color: rgb(67,67,67);
+                display: none;
                 width: 800px;
                 height: 800px;
                 margin: 0px auto;
@@ -136,6 +147,7 @@ body {
                 border:orange 5px solid;
                 background-color: rgb(67,67,67);
                 clear: both;
+                display: none;
             }
             .orign_img{
                 float: left;
@@ -150,6 +162,13 @@ body {
 </head>
 <body>
 <h1 id="timer">00:00:00</h1>
+
+<div>
+
+<h2>华容道是一种传统的拼图游戏，玩家可以通过点击拖动来移动方块，将它们按照正确的图形顺序排列，只有相邻的方块可以移动到空格内。
+</h2>
+</div>
+
 <div  id="item_content">
     <!--<img οnclick="onItemClick(this)" data-index=0 class="list_item" style="background-image: url('2.png');background-position: 0px 0px"/>-->
     <!--<img οnclick="onItemClick(this)" data-index=1 class="list_item" style="background-image: url('2.png');background-position: -200px 0px"/>-->
@@ -172,10 +191,18 @@ body {
 
 <img id="small_img" class="orign_img" src="2.png">
 
-
-
+<br><br><br>
+<div style="text-align:center;">
+<h1><input type="image" id="startButton" src="1.gif" onclick="startGame()" width="300" height="150"/></h1>
+</div>
 <script>
 
+document.getElementById("startButton").addEventListener('click', function() {
+document.getElementById("item_content").style.display = "block";
+document.getElementById("rule").style.display = "none";
+});
+
+var timerInterval;
 var seconds = 0;
 var minutes = 0;
 var hours = 0;
@@ -202,8 +229,19 @@ function zeroPadding(num) {
   return num < 10 ? "0" + num : num;
 }
 
-setInterval(updateTimer, 1000);
+function startGame() {
+  // 禁用开始按钮
+  var startButton = document.getElementById("startButton");
+  startButton.disabled = true;
 
+  document.getElementById("startButton").style.display="none";
+
+  // 恢复其他操作
+  document.body.style.pointerEvents = "auto";
+
+  // 开始实时计时
+  timerInterval = setInterval(updateTimer, 1000);
+}
 
     var content = document.querySelector("#item_content");
 
